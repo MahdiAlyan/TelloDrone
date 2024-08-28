@@ -1,0 +1,141 @@
+{% extends 'drone/base.html' %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+{% block title %}
+    Fly Tello
+{% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <!-- Video and Control Div - Centered and Stacked -->
+        <div class="col-md-6 d-flex flex-column align-items-center">
+            <div id="video-feed" class="border border-primary rounded shadow-sm overflow-hidden">
+                <!-- Centered Video Feed -->
+                <img id="video" src="http://127.0.0.1:8000/drone/video" style="width: 100%; height: auto;" alt="kamel">
+            </div>
+            <div id="control-area" tabindex="0" class="mt-4 p-4 bg-dark text-white rounded shadow-lg w-100 text-center">
+                <h5 class="mb-3">🚀 Press Arrow Keys to Control the Drone 🚁</h5>
+                <p id="status" class="font-italic">Waiting for key press...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+
+    document.getElementById('video').addEventListener('loadeddata', function() {
+        this.play();
+    }, false);
+
+
+    document.getElementById('control-area').focus();
+
+    let command = '';
+    let status = document.getElementById('status');
+
+    document.getElementById('control-area').addEventListener('keydown', function(event) {
+        switch(event.key) {
+            case 'e':
+                command = 'e';
+                status.textContent = 'Taking off...';
+                break;
+            case 'q':
+                command = 'q';
+                status.textContent = 'Landing...';
+                break;
+            case 'ArrowUp':
+                command = 'UP';
+                status.textContent = 'Moving Forward';
+                break;
+            case 'ArrowDown':
+                command = 'DOWN';
+                status.textContent = 'Moving Backward';
+                break;
+            case 'ArrowLeft':
+                command = 'LEFT';
+                status.textContent = 'Moving Left';
+                break;
+            case 'ArrowRight':
+                command = 'RIGHT';
+                status.textContent = 'Moving Right';
+                break;
+            case 'w':
+                command = 'w';
+                status.textContent = 'Moving Up';
+                break;
+            case 's':
+                command = 's';
+                status.textContent = 'Moving Down';
+                break;
+            case 'a':
+                command = 'a';
+                status.textContent = 'Rotating Left';
+                break;
+            case 'd':
+                command = 'd';
+                status.textContent = 'Rotating Right';
+                break;
+            case 'g':
+                command = 'g';
+                status.textContent = 'Back Flipping     ';
+                break;
+            default:
+                command = '';
+                status.textContent = 'Key not recognized';
+        }
+
+        if (command) {
+            $.ajax({
+                url: '/drone/control/',
+                method: 'POST',
+                data: {
+                    command: command,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    console.log('Command sent:', command);
+                },
+                error: function(error) {
+                    console.log('Error sending command:', error);
+                }
+            });
+        }
+    });
+
+    document.getElementById('control-area').addEventListener('keyup', function(event) {
+        // Stop the drone when key is released
+        $.ajax({
+            url: '/drone/control/',
+            method: 'POST',
+            data: {
+                command: 'STOP',
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                status.textContent = 'Stopped';
+                console.log('Command sent: STOP');
+            },
+            error: function(error) {
+                console.log('Error sending stop command:', error);
+            }
+        });
+    });
+
+
+
+</script>
+
+
+<link rel="stylesheet" href="static/css/control.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+{% endblock %}
+
+
+
+
+
+

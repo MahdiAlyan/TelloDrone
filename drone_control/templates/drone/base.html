@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport " content="width = device-width, initial-scale = 1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+    <title>{% block title %}{% endblock %} | Tello</title>
+
+
+
+</head>
+<body class="bg-light-dark text-white">
+    <nav class="navbar navbar-dark bg-dark py-3 px-3 border-bottom border-secondary">
+        <a href="#" class="navbar-brand text-xl font-weight-bold">Tello</a>
+
+        <div class="ml-auto">
+            <a href="#" class="text-lg font-weight-bold text-light mr-3">Fly</a>
+            <a href="#" class="text-lg font-weight-bold text-light mr-3">Help</a>
+
+            <a href="#" class="btn btn-teal text-white font-weight-bold mr-2">Sign UP</a>
+            <a href="#" class="btn btn-secondary text-white font-weight-bold">Log in</a>
+        </div>
+    </nav>
+
+    <div class="container py-3">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container d-flex justify-content-between">
+            <div class="w-75 pr-5">
+                <h3 class="mb-3 font-weight-bold text-light">About</h3>
+                <p class="text-lg text-secondary">
+                    lorem ipsum bla bla bla.lorem ipsum bla bla bla.lorem ipsum bla bla bla.lorem ipsum bla bla bla.
+                </p>
+            </div>
+
+            <div class="w-25">
+                <h3 class="mb-3 font-weight-bold text-light">Menu</h3>
+                <ul class="list-unstyled">
+                    <li> <a href="#" class="text-lg text-teal font-weight-bold d-block">Stats</a> </li>
+                    <li> <a href="#" class="text-lg text-teal font-weight-bold d-block">Flight Records</a> </li>
+                    <li> <a href="#" class="text-lg text-teal font-weight-bold d-block">Privacy & Policy</a> </li>
+                    <li> <a href="#" class="text-lg text-teal font-weight-bold d-block">Terms of use</a> </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</body>
+
+<style>
+    .bg-light-dark {
+        background-color: #929292;
+    }
+</style>
+
+
+</html>
